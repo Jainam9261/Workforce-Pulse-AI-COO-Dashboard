@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://workforce-pulse-ai-coo-dashboard.onrender.com",
 });
 
 export const fetchMetrics = () =>
