@@ -73,26 +73,26 @@ const AnomalyCards = ({
 
   return (
     <div
-      className={`rounded-3xl p-6 border shadow-2xl backdrop-blur-xl transition-all duration-300 ${
+      className={`rounded-3xl p-4 sm:p-6 border shadow-2xl backdrop-blur-xl transition-all duration-300 min-w-0 ${
         darkMode
           ? "bg-white/5 border-white/10"
           : "bg-white border-gray-200"
       }`}
     >
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4 sm:mb-6 min-w-0">
+        <div className="min-w-0">
+          <div className="flex flex-col xs:flex-row xs:items-center gap-3 min-w-0">
+            <div className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center">
               <AlertTriangle />
             </div>
 
-            <div>
-              <h2 className="text-3xl font-bold">
+            <div className="min-w-0">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
                 Anomaly Detection
               </h2>
 
-              <p className="text-gray-400 mt-1">
+              <p className="text-gray-400 mt-1 text-sm sm:text-base">
                 Workforce anomaly
                 insights and
                 repetitive workload
@@ -103,10 +103,10 @@ const AnomalyCards = ({
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 min-w-0">
           {/* Search */}
           <div
-            className={`flex items-center gap-2 px-4 py-3 rounded-2xl border ${
+            className={`flex items-center gap-2 min-w-0 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl border ${
               darkMode
                 ? "bg-[#111827] border-white/10"
                 : "bg-gray-50 border-gray-200"
@@ -114,7 +114,7 @@ const AnomalyCards = ({
           >
             <Search
               size={18}
-              className="text-gray-400"
+              className="text-gray-400 shrink-0"
             />
 
             <input
@@ -126,7 +126,7 @@ const AnomalyCards = ({
                   e.target.value
                 )
               }
-              className={`bg-transparent outline-none ${
+              className={`min-w-0 flex-1 w-full bg-transparent outline-none text-sm sm:text-base ${
                 darkMode
                   ? "text-white placeholder:text-gray-500"
                   : "text-gray-900"
@@ -136,7 +136,7 @@ const AnomalyCards = ({
 
           {/* Severity Filter */}
           <div
-            className={`flex items-center gap-2 px-4 py-3 rounded-2xl border ${
+            className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl border ${
               darkMode
                 ? "bg-[#111827] border-white/10"
                 : "bg-gray-50 border-gray-200"
@@ -144,7 +144,7 @@ const AnomalyCards = ({
           >
             <Filter
               size={18}
-              className="text-gray-400"
+              className="text-gray-400 shrink-0"
             />
 
             <select
@@ -156,7 +156,7 @@ const AnomalyCards = ({
                   e.target.value
                 )
               }
-              className={`outline-none rounded-xl px-2 py-1 transition-all ${
+              className={`min-w-0 flex-1 outline-none rounded-xl px-2 py-1 text-sm sm:text-base transition-all ${
                 darkMode
                   ? "bg-[#111827] text-white"
                   : "bg-gray-100 text-gray-900"
@@ -199,27 +199,27 @@ const AnomalyCards = ({
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {filteredAnomalies.map(
           (anomaly, index) => (
             <div
               key={index}
-              className={`rounded-3xl p-5 border transition-all hover:scale-[1.02] ${
+              className={`rounded-3xl p-4 sm:p-5 border transition-all hover:scale-[1.01] sm:hover:scale-[1.02] min-w-0 ${
                 darkMode
                   ? "bg-[#111827] border-white/10"
                   : "bg-white border-gray-200"
               }`}
             >
               {/* Top */}
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold">
+              <div className="flex flex-col gap-3 xs:flex-row xs:items-start xs:justify-between mb-4 min-w-0">
+                <div className="min-w-0">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words">
                     {
                       anomaly.employee_name
                     }
                   </h3>
 
-                  <p className="text-gray-400 mt-1">
+                  <p className="text-gray-400 mt-1 text-sm sm:text-base">
                     {
                       anomaly.department
                     }
@@ -227,7 +227,7 @@ const AnomalyCards = ({
                 </div>
 
                 <span
-                  className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                  className={`self-start xs:self-auto px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold shrink-0 ${
                     anomaly.severity ===
                     "high"
                       ? "bg-red-500/20 text-red-400"

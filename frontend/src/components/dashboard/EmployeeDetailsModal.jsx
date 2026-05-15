@@ -21,38 +21,46 @@ import {
         : "Low";
   
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4 min-w-0">
         {/* Modal */}
         <div
-          className={`w-full max-w-2xl rounded-3xl border shadow-2xl overflow-hidden ${
+          className={`w-full max-w-2xl rounded-t-3xl sm:rounded-3xl border shadow-2xl backdrop-blur-xl transition-all duration-300 max-h-[90vh] overflow-y-auto overscroll-contain min-w-0 ${
             darkMode
               ? "bg-[#0F172A] border-white/10 text-white"
               : "bg-white border-gray-200 text-gray-900"
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-white/10">
-            <div>
-              <h2 className="text-3xl font-bold">
+          <div
+            className={`flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between p-4 sm:p-6 border-b shrink-0 ${
+              darkMode
+                ? "border-white/10"
+                : "border-gray-200"
+            }`}
+          >
+            <div className="min-w-0">
+              <h2 className="text-2xl sm:text-3xl font-bold break-words">
                 {employee.name}
               </h2>
-  
-              <p className="text-gray-400 mt-1">
+
+              <p className="text-gray-400 mt-1 text-sm sm:text-base">
                 Employee Operational
                 Insights
               </p>
             </div>
-  
+
             <button
+              type="button"
               onClick={onClose}
-              className="h-10 w-10 rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
+              className="h-10 w-10 shrink-0 self-end sm:self-start rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
+              aria-label="Close"
             >
               <X size={20} />
             </button>
           </div>
-  
+
           {/* Content */}
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             {/* Department */}
             <div
               className={`rounded-2xl p-5 border ${
@@ -152,7 +160,13 @@ import {
           </div>
   
           {/* Footer */}
-          <div className="p-6 border-t border-white/10">
+          <div
+            className={`p-4 sm:p-6 border-t ${
+              darkMode
+                ? "border-white/10"
+                : "border-gray-200"
+            }`}
+          >
             <div
               className={`rounded-2xl p-5 ${
                 darkMode

@@ -72,7 +72,7 @@ const FloatingAIButton = ({
     <>
       {/* Chat Panel */}
       <div
-        className={`fixed bottom-28 right-8 z-50 w-[calc(100vw-2rem)] sm:w-[400px] h-[600px] max-h-[calc(100vh-10rem)] rounded-3xl border shadow-2xl backdrop-blur-2xl overflow-hidden origin-bottom-right transition-all duration-300 ${
+        className={`fixed z-50 max-lg:left-3 max-lg:right-3 max-lg:bottom-[calc(9.5rem+env(safe-area-inset-bottom))] lg:left-auto lg:right-8 lg:bottom-28 w-auto lg:w-[min(400px,calc(100vw-4rem))] h-[min(600px,calc(100dvh-11rem-env(safe-area-inset-bottom)))] max-h-[calc(100dvh-11rem-env(safe-area-inset-bottom))] rounded-3xl border shadow-2xl backdrop-blur-2xl overflow-hidden origin-bottom-right transition-all duration-300 ${
           open
             ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-95 translate-y-4 pointer-events-none"
@@ -226,8 +226,9 @@ const FloatingAIButton = ({
 
       {/* Floating Button */}
       <button
+        type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="fixed bottom-8 right-8 z-50 group"
+        className="fixed z-50 max-lg:right-3 max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom))] lg:right-8 lg:bottom-8 group"
         aria-label={open ? "Close AI Assistant" : "Open AI Assistant"}
       >
         {/* Pulse ring (only when closed) */}

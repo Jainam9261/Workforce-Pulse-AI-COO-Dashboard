@@ -20,6 +20,8 @@ import FloatingAIButton from "../components/dashboard/FloatingAIButton";
 
 import Sidebar from "../components/layout/Sidebar";
 
+import MobileBottomNav from "../components/layout/MobileBottomNav";
+
 const Dashboard = () => {
   const [metrics, setMetrics] =
     useState(null);
@@ -151,7 +153,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className={`min-h-screen transition-all duration-300 overflow-hidden ${
+      className={`min-h-screen min-w-0 transition-all duration-300 overflow-x-hidden ${
         darkMode
           ? "bg-[#0B1120] text-white"
           : "bg-gray-100 text-gray-900"
@@ -162,15 +164,15 @@ const Dashboard = () => {
 
       <div className="fixed bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/20 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="flex relative z-10">
+      <div className="flex relative z-10 min-h-screen min-w-0">
         {/* Sidebar */}
         <Sidebar darkMode={darkMode} />
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto h-screen">
+        <div className="flex-1 min-h-0 min-w-0 h-screen overflow-y-auto overflow-x-hidden overscroll-y-contain">
           <div
             id="dashboard"
-            className="max-w-7xl mx-auto p-6"
+            className="max-w-7xl mx-auto px-3 py-4 pb-24 xs:px-4 sm:px-6 sm:py-6 lg:pb-8"
           >
             {/* Header */}
             <Header
@@ -191,7 +193,7 @@ const Dashboard = () => {
             />
 
             {/* Main Grid */}
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
               {/* Automation */}
               <div
                 id="automation"
@@ -214,17 +216,17 @@ const Dashboard = () => {
               <div className="space-y-6">
                 {/* Top Opportunity */}
                 <div
-                  className={`backdrop-blur-xl rounded-3xl p-6 shadow-2xl border transition-all duration-300 ${
+                  className={`backdrop-blur-xl rounded-3xl p-4 sm:p-6 shadow-2xl border transition-all duration-300 min-w-0 ${
                     darkMode
                       ? "bg-white/5 border-white/10"
                       : "bg-white border-gray-200"
                   }`}
                 >
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-400 text-xs sm:text-sm">
                     Top Opportunity
                   </p>
 
-                  <h2 className="text-3xl font-bold mt-3">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mt-3 break-words">
                     {
                       filteredRanking?.[0]
                         ?.task_category
@@ -242,18 +244,18 @@ const Dashboard = () => {
 
                 {/* High Severity */}
                 <div
-                  className={`backdrop-blur-xl rounded-3xl p-6 shadow-2xl border transition-all duration-300 ${
+                  className={`backdrop-blur-xl rounded-3xl p-4 sm:p-6 shadow-2xl border transition-all duration-300 min-w-0 ${
                     darkMode
                       ? "bg-white/5 border-white/10"
                       : "bg-white border-gray-200"
                   }`}
                 >
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-400 text-xs sm:text-sm">
                     High Severity
                     Anomalies
                   </p>
 
-                  <h2 className="text-4xl font-bold mt-3 text-red-400">
+                  <h2 className="text-3xl sm:text-4xl font-bold mt-3 text-red-400">
                     {
                       filteredAnomalies.filter(
                         (item) =>
@@ -272,13 +274,13 @@ const Dashboard = () => {
 
                 {/* AI Summary */}
                 <div
-                  className={`rounded-3xl p-6 shadow-2xl border backdrop-blur-xl transition-all duration-300 ${
+                  className={`rounded-3xl p-4 sm:p-6 shadow-2xl border backdrop-blur-xl transition-all duration-300 min-w-0 ${
                     darkMode
                       ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20 border-white/10"
                       : "bg-gradient-to-br from-blue-100 to-purple-100 border-gray-200"
                   }`}
                 >
-                  <h2 className="text-2xl font-bold">
+                  <h2 className="text-xl sm:text-2xl font-bold">
                     AI Summary
                   </h2>
 
@@ -351,6 +353,10 @@ const Dashboard = () => {
         metrics={metrics}
         automationRanking={automationRanking}
         anomalies={anomalies}
+        darkMode={darkMode}
+      />
+
+      <MobileBottomNav
         darkMode={darkMode}
       />
     </div>
