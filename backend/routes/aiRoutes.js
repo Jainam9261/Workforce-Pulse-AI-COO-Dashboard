@@ -1,5 +1,3 @@
-// backend/routes/aiRoutes.js
-
 const express = require("express");
 
 const router = express.Router();
@@ -74,28 +72,41 @@ Provide:
 - bullet points where helpful
 `;
 
-      // Gemini API
+      // NVIDIA Nemotron API
       const response =
         await axios.post(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+          "https://integrate.api.nvidia.com/v1/chat/completions",
           {
-            contents: [
+            model:
+              "nvidia/nemotron-3-nano-30b-a3b",
+
+            messages: [
               {
-                parts: [
-                  {
-                    text: prompt,
-                  },
-                ],
+                role: "user",
+                content: prompt,
               },
             ],
+
+            temperature: 0.4,
+
+            top_p: 0.9,
+
+            max_tokens: 700,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
+
+              "Content-Type":
+                "application/json",
+            },
           }
         );
 
       // Extract Response
       const text =
-        response.data.candidates?.[0]
-          ?.content?.parts?.[0]
-          ?.text ||
+        response.data.choices?.[0]
+          ?.message?.content ||
         "No response generated.";
 
       res.json({
@@ -109,22 +120,31 @@ Provide:
       let message =
         "AI assistant failed.";
 
-      // Quota Exceeded
+      // NVIDIA Rate Limit
       if (
         error.response?.status ===
         429
       ) {
         message =
-          "Gemini free-tier quota exceeded. Please wait and try again later.";
+          "NVIDIA API rate limit exceeded. Please try again later.";
       }
 
-      // Model Not Found
+      // Invalid Model
       if (
         error.response?.status ===
         404
       ) {
         message =
-          "Gemini model not found.";
+          "NVIDIA model not found.";
+      }
+
+      // Unauthorized
+      if (
+        error.response?.status ===
+        401
+      ) {
+        message =
+          "Invalid NVIDIA API key.";
       }
 
       res.status(500).json({
