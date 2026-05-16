@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 import {
   Bot,
@@ -9,6 +10,83 @@ import {
 } from "lucide-react";
 
 import API from "../../services/api";
+
+const getMarkdownComponents = (darkMode) => ({
+  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+  strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+  em: ({ children }) => <em className="italic">{children}</em>,
+  h1: ({ children }) => (
+    <h1 className="mb-2 text-base font-bold">{children}</h1>
+  ),
+  h2: ({ children }) => (
+    <h2 className="mb-2 text-sm font-bold">{children}</h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="mb-1.5 text-sm font-semibold">{children}</h3>
+  ),
+  ul: ({ children }) => (
+    <ul className="mb-2 list-disc space-y-1 pl-4">{children}</ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="mb-2 list-decimal space-y-1 pl-4">{children}</ol>
+  ),
+  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  blockquote: ({ children }) => (
+    <blockquote
+      className={`mb-2 border-l-2 pl-3 italic ${
+        darkMode ? "border-white/30 text-gray-300" : "border-gray-300 text-gray-600"
+      }`}
+    >
+      {children}
+    </blockquote>
+  ),
+  a: ({ href, children }) => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-400 underline underline-offset-2 hover:text-blue-300"
+    >
+      {children}
+    </a>
+  ),
+  code: ({ className, children, ...props }) => {
+    const isInline = !className;
+    if (isInline) {
+      return (
+        <code
+          className={`rounded px-1 py-0.5 font-mono text-[0.85em] ${
+            darkMode ? "bg-white/15" : "bg-black/5"
+          }`}
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    }
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  },
+  pre: ({ children }) => (
+    <pre
+      className={`mb-2 overflow-x-auto rounded-lg p-3 text-xs ${
+        darkMode ? "bg-white/10" : "bg-black/5"
+      }`}
+    >
+      {children}
+    </pre>
+  ),
+  hr: () => (
+    <hr
+      className={`my-3 border-0 border-t ${
+        darkMode ? "border-white/10" : "border-gray-200"
+      }`}
+    />
+  ),
+});
 
 const FloatingAIButton = ({
   metrics,
@@ -161,15 +239,21 @@ const FloatingAIButton = ({
               }`}
             >
               <div
-                className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm whitespace-pre-wrap leading-relaxed shadow-sm ${
+                className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                   message.role === "user"
-                    ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md"
+                    ? "whitespace-pre-wrap bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md"
                     : darkMode
                     ? "bg-white/10 text-white rounded-bl-md"
                     : "bg-gray-100 text-gray-900 rounded-bl-md"
                 }`}
               >
-                {message.content}
+                {message.role === "user" ? (
+                  message.content
+                ) : (
+                  <ReactMarkdown components={getMarkdownComponents(darkMode)}>
+                    {message.content}
+                  </ReactMarkdown>
+                )}
               </div>
             </div>
           ))}
